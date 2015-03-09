@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/ruby_mint.svg)](http://badge.fury.io/rb/ruby_mint)
+
 # RubyMint
 
 RubyMint is a gem to assist you with getting information from Mint.com's API.

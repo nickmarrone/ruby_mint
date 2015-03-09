@@ -63,7 +63,7 @@ class RubyMint
 
   # Check if user is logged in already by the presence of a token.
   #
-  # @returns [Boolean]
+  # @return [Boolean]
   def logged_in?
     !@token.nil?
   end
@@ -82,7 +82,7 @@ class RubyMint
 
   # Is Mint.com in the process of refreshing its data?
   #
-  # @returns [Boolean]
+  # @return [Boolean]
   def refreshing?
     response = agent.get("https://wwws.mint.com/userStatus.xevent", JSON_HEADERS)
     if response.code != "200" || !response.body.include?("isRefreshing")
@@ -95,7 +95,7 @@ class RubyMint
   # Get account data
   #
   # @param account_types [Array<String>] Type of accounts to retrieve. Defaults to all types.
-  # @returns [Hash]
+  # @return [Hash]
   def accounts(account_types = ACCOUNT_TYPES)
     # Use a new request_id
     @request_id += 1
@@ -123,7 +123,7 @@ class RubyMint
   # Get transactions from mint. They are returned as CSV and include ALL
   # the transactions available
   #
-  # @returns [String] CSV of all transactions
+  # @return [String] CSV of all transactions
   def transactions
     results = agent.get("https://wwws.mint.com/transactionDownload.event", JSON_HEADERS)
     raise RubyMintError.new("Unable to obtain transations.") if results.code != "200"
