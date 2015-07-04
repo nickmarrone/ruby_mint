@@ -61,7 +61,7 @@ ruby_mint.initiate_account_refresh do
 
   if transactions_file
     puts "Downloading transactions..."
-    transactions = ruby_mint.transactions
+    transactions = ruby_mint.transactions_csv
   end
 end
 
