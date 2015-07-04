@@ -32,7 +32,11 @@ class RubyMint
   end
 
   # Login retrieves a user token from Mint.com
-  def login
+  #
+  # @param use_token [String] Use an existing token
+  def login(use_token = nil)
+    @token = use_token and return if use_token
+
     response = agent.get("https://wwws.mint.com/login.event?task=L")
     raise RubyMintError.new("Unable to GET Mint login page.") if response.code != "200"
 
@@ -111,6 +115,8 @@ class RubyMint
     # Use token to get list of accounts
     results = agent.post("https://wwws.mint.com/bundledServiceController.xevent?legacy=false&token=#{@token}", account_query, JSON_HEADERS)
     raise RubyMintError.new("Unable to obtain account information. Response code: #{results.code}") if results.code != "200"
+
+    raise RubyMintError.new("Not logged in.") if results.body.include?('Session has expired.')
 
     account_body = JSON.load(results.body)
     if !account_body || !account_body["response"] || !account_body["response"][@request_id.to_s] || !account_body["response"][@request_id.to_s]["response"]
