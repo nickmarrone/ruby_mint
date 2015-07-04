@@ -65,10 +65,32 @@ accounts = ruby_mint.accounts
 
 # Transaction Data
 
-Mint.com returns transactions as CSV.
+Transactions can be obtained as either CSV or JSON data.
+
+CSV is a list of all transactions as a CSV dump.
+
+NOTE: Breaking change from v0.1 Old transactions method is now transactions_csv
 
 ```ruby
-transactions = ruby_mint.transactions
+transactions_csv = ruby_mint.transactions_csv
+```
+
+JSON data must specify a date range and has the option to include pending transactions
+or to include a search term. Mint only returns a transaction date without a time. Date
+range is inclusive.
+
+```ruby
+# Get all transactions from May 1, 2015 until now
+transactions = ruby_mint.transactions Time.parse("2015-05-01")
+
+# Get all transactions for the month of May
+transactions = ruby_mint.transactions Time.parse("2015-05-01"), Time.parse("2015-05-31")
+
+# Include pending transactions
+transactions = ruby_mint.transactions Time.parse("2015-05-01"), Time.parse("2015-05-31"), 'include_pending' => true
+
+# Include a search term
+transactions = ruby_mint.transactions Time.parse("2015-05-01"), Time.parse("2015-05-31"), 'search_term' => 'coffee'
 ```
 
 ## Contributing
