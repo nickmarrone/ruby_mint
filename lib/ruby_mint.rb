@@ -72,9 +72,9 @@ class RubyMint
   #
   # @param sleep_time [Integer] Num of seconds to wait between calls to refreshing? when block is passed
   # @param block [Block] Code to execute upon completion of of refreshing
-  def initiate_account_refresh(sleep_time = 3, &block)
+  def initiate_account_refresh(sleep_time = 3)
     agent.post("https://wwws.mint.com/refreshFILogins.xevent", { "token" => @token }, JSON_HEADERS)
-    if block
+    if block_given?
       loop{ sleep sleep_time; break if !refreshing? }
       yield
     end
